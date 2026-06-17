@@ -1,0 +1,61 @@
+{
+  "styleVersion": "1.0",
+  "description": "西游记儿童版 - 内容风格与视觉规范，确保每日连载一致性",
+
+  "textStyle": {
+    "targetAge": "6-7岁（小学一年级）",
+    "vocabularyLevel": "以一年级课本常用字（300-400字）为主，每段不超过3个生字，生字加拼音注释",
+    "sentenceLength": "每句8-15个字，避免复合句",
+    "paragraphLength": "每段3-5句话",
+    "tone": "活泼、亲切、像讲故事一样，多用'你看''哇''哎呀'等口语化表达",
+    "narrationStyle": "第三人称，直接称呼小朋友为'你'，互动式讲述",
+    "chapterLength": "每回600-800字（简化为儿童版）",
+    "dialogueRules": "对话用引号，每句对话前注明说话人（如：孙悟空说：'...'）",
+    "characterNames": "统一使用：孙悟空、唐僧师父、猪八戒、沙和尚、太白金星、玉皇大帝、观音菩萨、如来佛祖、白骨精、红孩儿等",
+    "forbiddenWords": "不使用：死、杀、鬼、妖（改用'怪''坏蛋'）、血腥暴力词汇",
+    "formatRules": "每个内容块用 <text> 和 <image> 交替排列，每回2-3个图片插入点",
+    "sampleStart": "很久很久以前，在大海中间有一座花果山。山上有好多好多桃子树，还有可爱的小猴子们在玩耍..."
+  },
+
+  "imageStyle": {
+    "artStyle": "扁平化儿童绘本风格，线条圆润可爱，色彩温暖明亮",
+    "colorPalette": "暖色调为主：奶黄色底、桃红色点缀、浅绿色草地、天蓝色天空、柔和棕色轮廓",
+    "characterDesign": {
+      "孙悟空": {
+        "description": "可爱的小猴子，金色毛发，圆圆的大眼睛，头上戴着金色紧箍圈，身穿红色小马甲和虎皮裙，手里拿一根红色金箍棒，笑起来露出小白牙，身高像小朋友",
+        "keyFeatures": ["金色毛发", "红色马甲", "金色紧箍圈", "红色金箍棒", "圆圆大眼睛", "可爱笑脸"]
+      },
+      "唐僧": {
+        "description": "温柔的师父，圆圆的脸，穿橙红色袈裟，戴毗卢帽，手持九环锡杖，总是笑眯眯的，看起来很善良",
+        "keyFeatures": ["橙红色袈裟", "毗卢帽", "九环锡杖", "笑眯眯的脸", "微胖可爱身材"]
+      },
+      "猪八戒": {
+        "description": "粉色小猪形象，大耳朵，穿黑色衣服，挺着圆圆的小肚子，扛着九齿钉耙，表情憨憨的很可爱",
+        "keyFeatures": ["粉色皮肤", "大耳朵", "圆肚子", "九齿钉耙", "憨憨笑容"]
+      },
+      "沙和尚": {
+        "description": "蓝紫色皮肤，红色头发和胡子，脖子上挂着一串大佛珠，扛着降妖宝杖，看起来有点吓人但其实很温柔",
+        "keyFeatures": ["蓝紫皮肤", "红头发", "大佛珠", "降妖宝杖", "憨厚笑容"]
+      },
+      "白龙马": {
+        "description": "白色的小马，鬃毛飘逸，眼睛大大的很温顺，背上驮着唐僧",
+        "keyFeatures": ["纯白毛发", "飘逸鬃毛", "温顺大眼", "红色马鞍"]
+      }
+    },
+    "composition": "画面主体居中，背景简单不杂乱，前景留白充足，方便小朋友看清人物",
+    "aspectRatio": "16:9 横版插图",
+    "moodKeywords": ["warm", "cute", "playful", "children's book illustration", "flat color", "soft shading", "rounded shapes", "storybook style", "adorable", "cartoon", "kawaii"],
+    "forbiddenElements": ["尖牙利爪", "恐怖元素", "黑暗场景", "武器血腥表现", "复杂背景", "写实风格"],
+    "basePrompt": "cute cartoon illustration for children's book, flat vector art style, warm and bright colors, soft rounded shapes, storybook aesthetic, adorable characters with big expressive eyes, clean simple background, suitable for 6-year-old kids, kawaii style, no scary elements, no sharp edges, no dark tones"
+  },
+
+  "chapterTemplate": {
+    "structure": [
+      "标题（第X回 + 原著回目名 + 儿童友好简化标题）",
+      "开场引导语（1-2句互动式开场）",
+      "正文段落（3-5个段落，每段之间插入1张图片）",
+      "结尾互动（1-2句问小朋友的话）",
+      "明日预告（1句话吊胃口）"
+    ]
+  }
+}

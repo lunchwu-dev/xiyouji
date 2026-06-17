@@ -1,0 +1,12 @@
+{
+  "currentChapter": 3,
+  "totalChapters": 100,
+  "chaptersPerDay": 2,
+  "lastUpdateDate": "2026-06-17",
+  "updateSchedule": "每日22:00",
+  "websiteUrl": "https://c5b09da172584859b8b4a5dc136c4700.app.codebuddy.work（每日更新后链接会变化，最新链接见飞书通知）",
+  "styleGuidePath": "website/data/style-guide.json",
+  "chaptersFilePath": "website/data/chapters.json",
+  "imageOutputDir": "website/images",
+  "deployDirectory": "website"
+}
