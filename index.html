@@ -156,8 +156,42 @@
   <!-- ── Chapter Detail Modal ── -->
   <div class="modal-overlay" id="chapterModal" role="dialog" aria-modal="true" aria-label="章节详情">
     <div class="modal-content">
-      <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
+
+      <!-- 弹窗顶部导航栏 -->
+      <div class="modal-nav-bar">
+        <button class="modal-back-home" id="modalBackHome" aria-label="返回首页">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">返回目录</span>
+        </button>
+        <span class="modal-chapter-indicator" id="modalChapterIndicator"></span>
+        <button class="modal-close" id="modalClose" aria-label="关闭阅读">✕</button>
+      </div>
+
+      <!-- 正文区 -->
       <div class="modal-body" id="modalBody"></div>
+
+      <!-- 弹窗底部章节导航 -->
+      <div class="modal-chapter-nav" id="modalChapterNav">
+        <button class="chapter-nav-btn prev-btn" id="modalPrevChapter" aria-label="上一章">
+          <span class="nav-arrow">←</span>
+          <div class="nav-btn-text">
+            <span class="nav-btn-label">上一章</span>
+            <span class="nav-btn-title" id="prevChapterTitle">—</span>
+          </div>
+        </button>
+        <button class="chapter-nav-btn toc-btn" id="modalGoToc" aria-label="返回目录">
+          <span class="nav-icon-lg">≡</span>
+          <span class="nav-btn-label">目录</span>
+        </button>
+        <button class="chapter-nav-btn next-btn" id="modalNextChapter" aria-label="下一章">
+          <div class="nav-btn-text">
+            <span class="nav-btn-label">下一章</span>
+            <span class="nav-btn-title" id="nextChapterTitle">—</span>
+          </div>
+          <span class="nav-arrow">→</span>
+        </button>
+      </div>
+
     </div>
   </div>
 
