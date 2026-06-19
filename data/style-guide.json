@@ -18,35 +18,36 @@
   },
 
   "imageStyle": {
-    "artStyle": "扁平化儿童绘本风格，线条圆润可爱，色彩温暖明亮",
-    "colorPalette": "暖色调为主：奶黄色底、桃红色点缀、浅绿色草地、天蓝色天空、柔和棕色轮廓",
+    "artStyle": "中国传统水墨画风格，结合工笔与写意技法，线条遒劲有力，墨色层次丰富，具有浓厚的东方美学气韵",
+    "colorPalette": "以水墨黑白灰为主调，辅以朱砂红、赭石棕、藤黄色等传统矿物色点缀，整体色调含蓄雅致，具有宣纸质感",
     "characterDesign": {
       "孙悟空": {
-        "description": "可爱的小猴子，金色毛发，圆圆的大眼睛，头上戴着金色紧箍圈，身穿红色小马甲和虎皮裙，手里拿一根红色金箍棒，笑起来露出小白牙，身高像小朋友",
-        "keyFeatures": ["金色毛发", "红色马甲", "金色紧箍圈", "红色金箍棒", "圆圆大眼睛", "可爱笑脸"]
+        "description": "金色毛发的聪慧猴子，头戴金色紧箍圈，身穿朱红色战袍，手持金箍棒，姿态矫健活泼，传统中国工笔人物画风格，面部神态生动",
+        "imagePromptKey": "Sun Wukong the Monkey King, golden-furred monkey hero, wearing golden circlet headband, dressed in red robe, holding golden staff (Ruyi Jingu Bang), dynamic heroic pose",
+        "keyFeatures": ["金色毛发", "朱红战袍", "金色紧箍圈", "金箍棒", "矫健姿态"]
       },
       "唐僧": {
-        "description": "温柔的师父，圆圆的脸，穿橙红色袈裟，戴毗卢帽，手持九环锡杖，总是笑眯眯的，看起来很善良",
-        "keyFeatures": ["橙红色袈裟", "毗卢帽", "九环锡杖", "笑眯眯的脸", "微胖可爱身材"]
+        "description": "慈眉善目的高僧，穿橙红袈裟，戴毗卢帽，神态温和安详，传统工笔佛教人物画风格",
+        "imagePromptKey": "Tang Sanzang the Buddhist monk, gentle face, wearing orange-red kasaya robe and Vairocana hat, holding nine-ring monk staff, serene and benevolent expression",
+        "keyFeatures": ["橙红袈裟", "毗卢帽", "九环锡杖", "温和神态"]
       },
       "猪八戒": {
-        "description": "粉色小猪形象，大耳朵，穿黑色衣服，挺着圆圆的小肚子，扛着九齿钉耙，表情憨憨的很可爱",
-        "keyFeatures": ["粉色皮肤", "大耳朵", "圆肚子", "九齿钉耙", "憨憨笑容"]
+        "description": "胖乎乎憨态可掬的猪形神仙，大耳朵，圆肚子，黑布衣，扛着九齿钉耙，憨厚喜感十足",
+        "imagePromptKey": "Zhu Bajie the pig immortal, chubby figure with large ears and round belly, wearing dark robes, carrying nine-toothed rake, comical and good-natured expression",
+        "keyFeatures": ["大耳朵", "圆肚子", "九齿钉耙", "憨厚神态"]
       },
       "沙和尚": {
-        "description": "蓝紫色皮肤，红色头发和胡子，脖子上挂着一串大佛珠，扛着降妖宝杖，看起来有点吓人但其实很温柔",
-        "keyFeatures": ["蓝紫皮肤", "红头发", "大佛珠", "降妖宝杖", "憨厚笑容"]
-      },
-      "白龙马": {
-        "description": "白色的小马，鬃毛飘逸，眼睛大大的很温顺，背上驮着唐僧",
-        "keyFeatures": ["纯白毛发", "飘逸鬃毛", "温顺大眼", "红色马鞍"]
+        "description": "面容刚毅温厚的沙僧，颈挂骷髅项链和大佛珠，手持降妖宝杖，忠厚老实的形象",
+        "imagePromptKey": "Sha Wujing the river monk, strong gentle face, wearing large Buddhist prayer bead necklace, carrying monk's spade staff, loyal and steady expression",
+        "keyFeatures": ["大佛珠", "降妖宝杖", "刚毅神态"]
       }
     },
-    "composition": "画面主体居中，背景简单不杂乱，前景留白充足，方便小朋友看清人物",
+    "composition": "画面留白充足体现东方美学，人物与山水互相呼应，前景精细后景写意，具有传统卷轴画的视觉节奏感",
     "aspectRatio": "16:9 横版插图",
-    "moodKeywords": ["warm", "cute", "playful", "children's book illustration", "flat color", "soft shading", "rounded shapes", "storybook style", "adorable", "cartoon", "kawaii"],
-    "forbiddenElements": ["尖牙利爪", "恐怖元素", "黑暗场景", "武器血腥表现", "复杂背景", "写实风格"],
-    "basePrompt": "cute cartoon illustration for children's book, flat vector art style, warm and bright colors, soft rounded shapes, storybook aesthetic, adorable characters with big expressive eyes, clean simple background, suitable for 6-year-old kids, kawaii style, no scary elements, no sharp edges, no dark tones"
+    "styleNotes": "每张图需有统一的宣纸底色感，墨色晕染自然，不使用现代数字感过重的渲染，保持传统水墨笔触的书写性",
+    "moodKeywords": ["Chinese ink wash painting", "traditional sumi-e", "classical Chinese art", "brush painting", "xieyi style", "gongbi technique", "rice paper texture", "ink gradients", "landscape painting", "figure painting", "Eastern aesthetic", "calligraphic brushstrokes"],
+    "forbiddenElements": ["现代卡通风格", "日式kawaii", "扁平矢量风", "恐怖血腥元素", "过于写实的照片感", "数字感过重的渲染"],
+    "basePrompt": "Chinese ink wash painting style, traditional Chinese brush painting, sumi-e art technique, classical Chinese figure and landscape painting aesthetic, monochrome ink with subtle warm sepia and cinnabar accent tones, delicate and expressive brushstrokes, soft ink gradients from deep black to pale wash, rice paper texture feel, traditional gongbi-meets-xieyi style, masterpiece quality Chinese art"
   },
 
   "chapterTemplate": {
