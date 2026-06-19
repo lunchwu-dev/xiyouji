@@ -1,0 +1,11 @@
+# WorkBuddy 工作目录（不提交）
+.workbuddy/
+
+# 飞书授权二维码（临时文件）
+feishu_auth_qr.png
+
+# 旧的 overview（AI 生成，不提交到仓库）
+overview.md
+
+# website 子目录（内容已同步到根目录，避免重复）
+website/
