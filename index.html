@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -24,9 +24,6 @@
     <svg class="ink-splash ink-splash-2" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M30 80 Q80 20 160 50 Q240 80 230 160 Q220 200 130 180 Q40 160 30 80Z" fill="currentColor" opacity="0.04"/>
     </svg>
-    <svg class="ink-splash ink-splash-3" viewBox="0 0 350 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M60 120 Q100 40 200 80 Q300 120 280 200 Q260 250 150 230 Q50 210 60 120Z" fill="currentColor" opacity="0.04"/>
-    </svg>
   </div>
 
   <!-- Theme Toggle -->
@@ -34,183 +31,133 @@
     <span class="theme-icon">🌙</span>
   </button>
 
-  <!-- ===================== BOOK COVER PAGE ===================== -->
-  <section class="book-cover" id="bookCover">
+  <!-- ===================== SINGLE PAGE: COVER + TOC ===================== -->
+  <main class="page-main">
 
-    <!-- Decorative brush strokes -->
-    <div class="brush-deco" aria-hidden="true">
-      <span class="brush-line brush-line-1"></span>
-      <span class="brush-line brush-line-2"></span>
-      <span class="brush-line brush-line-3"></span>
-    </div>
+    <!-- ── COVER SECTION ── -->
+    <section class="book-cover">
 
-    <!-- Corner ornaments -->
-    <div class="corner-ornament corner-tl" aria-hidden="true">
-      <svg viewBox="0 0 60 60"><path d="M5 5 Q30 5 55 30 L55 55 L5 55 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="5" r="3" fill="currentColor"/></svg>
-    </div>
-    <div class="corner-ornament corner-tr" aria-hidden="true">
-      <svg viewBox="0 0 60 60"><path d="M55 5 Q30 5 5 30 L5 55 L55 55 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="55" cy="5" r="3" fill="currentColor"/></svg>
-    </div>
-    <div class="corner-ornament corner-bl" aria-hidden="true">
-      <svg viewBox="0 0 60 60"><path d="M5 55 Q30 55 55 30 L55 5 L5 5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="55" r="3" fill="currentColor"/></svg>
-    </div>
-    <div class="corner-ornament corner-br" aria-hidden="true">
-      <svg viewBox="0 0 60 60"><path d="M55 55 Q30 55 5 30 L5 5 L55 5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="55" cy="55" r="3" fill="currentColor"/></svg>
-    </div>
-
-    <!-- Central cover content -->
-    <div class="cover-inner">
-
-      <!-- Top badge -->
-      <div class="cover-badge">每晚22:00 · 睡前故事 · 图文并茂</div>
-
-      <!-- Main cover illustration area -->
-      <div class="cover-art" aria-label="西游记封面插图">
-        <!-- SVG decorative motif - mountain, clouds, monkey silhouette -->
-        <svg class="cover-svg" viewBox="0 0 500 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <!-- Mountains -->
-          <path d="M0 240 Q60 180 120 200 Q160 160 200 140 Q240 120 280 150 Q310 130 360 100 Q400 80 440 120 Q470 140 500 130 L500 280 L0 280 Z" fill="currentColor" opacity="0.08"/>
-          <path d="M0 260 Q80 200 150 220 Q200 190 260 200 Q320 180 380 200 Q430 190 500 210 L500 280 L0 280 Z" fill="currentColor" opacity="0.06"/>
-          <!-- Clouds (ink style) -->
-          <ellipse cx="80" cy="60" rx="50" ry="18" fill="currentColor" opacity="0.07"/>
-          <ellipse cx="100" cy="55" rx="35" ry="14" fill="currentColor" opacity="0.06"/>
-          <ellipse cx="370" cy="40" rx="60" ry="20" fill="currentColor" opacity="0.07"/>
-          <ellipse cx="395" cy="35" rx="40" ry="15" fill="currentColor" opacity="0.05"/>
-          <ellipse cx="220" cy="80" rx="45" ry="15" fill="currentColor" opacity="0.06"/>
-          <!-- Sun / Moon circle -->
-          <circle cx="430" cy="70" r="30" fill="currentColor" opacity="0.06"/>
-          <circle cx="430" cy="70" r="22" fill="currentColor" opacity="0.04"/>
-          <!-- Monkey silhouette (simplified) -->
-          <g transform="translate(228, 85)" opacity="0.15">
-            <!-- Body -->
-            <ellipse cx="22" cy="70" rx="18" ry="24" fill="currentColor"/>
-            <!-- Head -->
-            <circle cx="22" cy="42" r="18" fill="currentColor"/>
-            <!-- Face lighter area -->
-            <ellipse cx="22" cy="46" rx="11" ry="9" fill="white" opacity="0.6"/>
-            <!-- Ears -->
-            <circle cx="5" cy="40" r="7" fill="currentColor"/>
-            <circle cx="39" cy="40" r="7" fill="currentColor"/>
-            <!-- Crown -->
-            <rect x="14" y="18" width="16" height="5" rx="2.5" fill="currentColor" opacity="0.8"/>
-            <!-- Staff -->
-            <rect x="42" y="30" width="4" height="60" rx="2" fill="currentColor" opacity="0.9"/>
-          </g>
-          <!-- Cloud scroll decoration -->
-          <path d="M40 200 Q80 180 100 195 Q120 180 160 198 Q180 185 220 196" stroke="currentColor" stroke-width="2" fill="none" opacity="0.1" stroke-linecap="round"/>
-        </svg>
+      <!-- Corner ornaments -->
+      <div class="corner-ornament corner-tl" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><path d="M5 5 Q30 5 55 30 L55 55 L5 55 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="5" r="3" fill="currentColor"/></svg>
+      </div>
+      <div class="corner-ornament corner-tr" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><path d="M55 5 Q30 5 5 30 L5 55 L55 55 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="55" cy="5" r="3" fill="currentColor"/></svg>
+      </div>
+      <div class="corner-ornament corner-bl" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><path d="M5 55 Q30 55 55 30 L55 5 L5 5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="55" r="3" fill="currentColor"/></svg>
+      </div>
+      <div class="corner-ornament corner-br" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><path d="M55 55 Q30 55 5 30 L5 5 L55 5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="55" cy="55" r="3" fill="currentColor"/></svg>
       </div>
 
-      <!-- Title block -->
-      <div class="cover-title-block">
-        <!-- Chinese vertical decorative stripes -->
-        <div class="title-deco-line" aria-hidden="true"></div>
-        <div class="cover-main-title">
-          <span class="title-char">西</span>
-          <span class="title-char">游</span>
-          <span class="title-char">记</span>
+      <div class="cover-inner">
+
+        <!-- Cover illustration -->
+        <div class="cover-art" aria-label="西游记封面插图">
+          <svg class="cover-svg" viewBox="0 0 500 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Mountains -->
+            <path d="M0 200 Q60 140 120 165 Q160 120 200 100 Q240 80 280 115 Q310 90 360 60 Q400 40 440 80 Q470 100 500 90 L500 240 L0 240 Z" fill="currentColor" opacity="0.07"/>
+            <path d="M0 220 Q80 165 150 185 Q200 155 260 168 Q320 145 380 165 Q430 155 500 175 L500 240 L0 240 Z" fill="currentColor" opacity="0.05"/>
+            <!-- Clouds -->
+            <ellipse cx="80" cy="50" rx="50" ry="16" fill="currentColor" opacity="0.06"/>
+            <ellipse cx="100" cy="45" rx="32" ry="12" fill="currentColor" opacity="0.05"/>
+            <ellipse cx="380" cy="30" rx="55" ry="18" fill="currentColor" opacity="0.06"/>
+            <ellipse cx="400" cy="25" rx="35" ry="13" fill="currentColor" opacity="0.04"/>
+            <!-- Sun circle -->
+            <circle cx="430" cy="55" r="28" fill="currentColor" opacity="0.06"/>
+            <circle cx="430" cy="55" r="20" fill="currentColor" opacity="0.04"/>
+            <!-- Monkey silhouette -->
+            <g transform="translate(228, 68)" opacity="0.14">
+              <ellipse cx="22" cy="65" rx="17" ry="22" fill="currentColor"/>
+              <circle cx="22" cy="38" r="17" fill="currentColor"/>
+              <ellipse cx="22" cy="42" rx="10" ry="8" fill="white" opacity="0.55"/>
+              <circle cx="5" cy="36" r="6" fill="currentColor"/>
+              <circle cx="39" cy="36" r="6" fill="currentColor"/>
+              <rect x="14" y="16" width="16" height="4.5" rx="2.2" fill="currentColor" opacity="0.85"/>
+              <rect x="42" y="26" width="4" height="56" rx="2" fill="currentColor" opacity="0.9"/>
+            </g>
+            <!-- Decorative scroll line -->
+            <path d="M40 180 Q80 160 100 175 Q120 160 160 178 Q180 165 220 176" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.1" stroke-linecap="round"/>
+          </svg>
         </div>
-        <div class="title-deco-line" aria-hidden="true"></div>
-      </div>
 
-      <!-- Subtitle -->
-      <div class="cover-subtitle">小朋友的睡前故事</div>
-
-      <!-- Divider ornament -->
-      <div class="cover-ornament-divider" aria-hidden="true">
-        <span></span>
-        <svg viewBox="0 0 40 20" fill="currentColor" width="40" height="20"><path d="M0 10 Q10 0 20 10 Q30 20 40 10"/></svg>
-        <span></span>
-      </div>
-
-      <!-- Brief intro paragraph -->
-      <div class="cover-intro">
-        <p>这是一个讲给小朋友听的<strong>西游记</strong>。</p>
-        <p>孙悟空、唐僧师父、猪八戒和沙和尚，</p>
-        <p>他们师徒四人一起去取经，</p>
-        <p>一路上有好多好多有趣的冒险呢！</p>
-      </div>
-
-      <!-- Cover meta -->
-      <div class="cover-meta">
-        <div class="cover-meta-item">
-          <span class="meta-icon">📖</span>
-          <span>共 100 回</span>
+        <!-- Title block -->
+        <div class="cover-title-block">
+          <div class="title-deco-line" aria-hidden="true"></div>
+          <div class="cover-main-title">
+            <span class="title-char t-red">西</span>
+            <span class="title-char t-black">游</span>
+            <span class="title-char t-gold">记</span>
+          </div>
+          <div class="title-deco-line" aria-hidden="true"></div>
         </div>
-        <div class="cover-meta-sep" aria-hidden="true">·</div>
-        <div class="cover-meta-item">
-          <span class="meta-icon">🖌️</span>
-          <span>水墨插图版</span>
+
+        <!-- Subtitle -->
+        <div class="cover-subtitle">小朋友的睡前故事</div>
+
+        <!-- Brief intro -->
+        <div class="cover-intro">
+          <p>孙悟空、唐僧师父、猪八戒和沙和尚，</p>
+          <p>师徒四人一起去取经，每天给你讲一段精彩的冒险！</p>
         </div>
-        <div class="cover-meta-sep" aria-hidden="true">·</div>
-        <div class="cover-meta-item">
-          <span class="meta-icon">⭐</span>
-          <span>适合一年级</span>
+
+        <!-- Cover meta -->
+        <div class="cover-meta">
+          <div class="cover-meta-item"><span class="meta-icon">📖</span><span>共 100 回</span></div>
+          <div class="cover-meta-sep" aria-hidden="true">·</div>
+          <div class="cover-meta-item"><span class="meta-icon">🖌️</span><span>水墨插图版</span></div>
+          <div class="cover-meta-sep" aria-hidden="true">·</div>
+          <div class="cover-meta-item"><span class="meta-icon">⭐</span><span>适合一年级</span></div>
         </div>
+
+        <!-- Divider with arrow pointing to TOC below -->
+        <div class="cover-to-toc-divider" aria-hidden="true">
+          <span class="divider-line"></span>
+          <span class="divider-text">目录</span>
+          <span class="divider-line"></span>
+        </div>
+
       </div>
-
-      <!-- Scroll down hint -->
-      <button class="scroll-to-toc" id="scrollToToc" aria-label="查看目录">
-        <span>翻开这本书</span>
-        <span class="scroll-arrow" aria-hidden="true">↓</span>
-      </button>
-
-    </div>
-  </section>
-
-  <!-- ===================== TABLE OF CONTENTS + CHAPTERS ===================== -->
-  <main class="toc-page" id="tocPage">
-
-    <!-- Page header -->
-    <div class="toc-header">
-      <div class="toc-title-wrap">
-        <div class="toc-stamp" aria-hidden="true">目录</div>
-        <h1 class="toc-main-title">西游记 · 章节目录</h1>
-        <p class="toc-sub">每晚 22:00 新增 2 个章节，和孙悟空一起冒险吧！</p>
-      </div>
-
-      <!-- Reading Progress -->
-      <div class="progress-panel" id="progressSection">
-        <div class="progress-header">
-          <span class="progress-label">📖 我的阅读进度</span>
-          <span class="progress-count" id="progressCount">加载中...</span>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill" id="progressBar" style="width: 0%;"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chapter list -->
-    <section class="chapter-grid" id="chapterGrid">
-      <!-- Populated by JS -->
     </section>
 
-    <!-- Empty State -->
-    <div class="empty-state" id="emptyState" style="display: none;">
-      <div class="empty-icon">📚</div>
-      <h2>故事还在路上...</h2>
-      <p>第一章正在快马加鞭赶来！<br>晚上22:00记得来看哦 ~</p>
-    </div>
+    <!-- ── TABLE OF CONTENTS ── -->
+    <section class="toc-section" id="toc">
+
+      <!-- TOC update info bar -->
+      <div class="toc-meta-bar">
+        <span class="toc-meta-chapters" id="tocChapterCount">加载中...</span>
+        <span class="toc-meta-sep">｜</span>
+        <span class="toc-meta-update" id="tocUpdateInfo">每晚 22:00 更新</span>
+      </div>
+
+      <!-- Chapter list (minimal) -->
+      <ol class="toc-list" id="tocList" aria-label="章节目录">
+        <!-- Populated by JS -->
+      </ol>
+
+      <!-- Empty State -->
+      <div class="toc-empty" id="tocEmpty" style="display:none;">
+        <p>故事还在路上，晚上22:00记得来看哦 🐒</p>
+      </div>
+
+    </section>
 
     <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-inner">
-        <div class="footer-ink" aria-hidden="true"></div>
-        <p>🌟 西游记 · 小朋友的睡前故事 🌟</p>
-        <p class="update-info" id="updateInfo">每晚 22:00 准时更新</p>
+        <p>🌟 西游记 · 小朋友的睡前故事 · 每晚 22:00 准时更新 🌟</p>
         <p class="footer-copy">内容专为一年级小朋友改编 · 水墨插图版</p>
       </div>
     </footer>
+
   </main>
 
-  <!-- Chapter Detail Modal -->
+  <!-- ── Chapter Detail Modal ── -->
   <div class="modal-overlay" id="chapterModal" role="dialog" aria-modal="true" aria-label="章节详情">
     <div class="modal-content">
       <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
-      <div class="modal-body" id="modalBody">
-        <!-- Populated by JS -->
-      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 

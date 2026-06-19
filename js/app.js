@@ -1,40 +1,35 @@
 /**
- * 西游记连载 - 儿童版
- * 核心交互逻辑：书封 → 目录 · 主题切换 · 章节加载 · 阅读进度 · 模态框
+ * 西游记连载 · 儿童版
+ * 首页 + 极简目录 + 章节弹窗
  */
 
 (function () {
   'use strict';
 
-  // ============ State ============
+  // ── State ──
   const state = {
     chapters: [],
     totalChapters: 100,
-    readChapters: JSON.parse(localStorage.getItem('xyj_read') || '[]'),
-    theme: localStorage.getItem('xyj_theme') || 'light',
     lastUpdate: '',
+    theme: localStorage.getItem('xyj_theme') || 'light',
   };
 
-  // ============ DOM Refs ============
+  // ── DOM ──
   const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => document.querySelectorAll(sel);
 
   const dom = {
-    themeToggle: $('#themeToggle'),
-    themeIcon: $('.theme-icon'),
-    chapterGrid: $('#chapterGrid'),
-    emptyState: $('#emptyState'),
-    progressBar: $('#progressBar'),
-    progressCount: $('#progressCount'),
-    updateInfo: $('#updateInfo'),
-    modal: $('#chapterModal'),
-    modalBody: $('#modalBody'),
-    modalClose: $('#modalClose'),
-    scrollToToc: $('#scrollToToc'),
-    tocPage: $('#tocPage'),
+    themeToggle:    $('#themeToggle'),
+    themeIcon:      $('.theme-icon'),
+    tocList:        $('#tocList'),
+    tocEmpty:       $('#tocEmpty'),
+    tocChapterCount:$('#tocChapterCount'),
+    tocUpdateInfo:  $('#tocUpdateInfo'),
+    modal:          $('#chapterModal'),
+    modalBody:      $('#modalBody'),
+    modalClose:     $('#modalClose'),
   };
 
-  // ============ Theme ============
+  // ── Theme ──
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     dom.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
@@ -42,125 +37,107 @@
     localStorage.setItem('xyj_theme', theme);
   }
 
-  function toggleTheme() {
-    const next = state.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-  }
+  dom.themeToggle.addEventListener('click', () => {
+    applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+  });
 
-  dom.themeToggle.addEventListener('click', toggleTheme);
-
-  // ============ Book Cover → TOC Scroll ============
-  if (dom.scrollToToc && dom.tocPage) {
-    dom.scrollToToc.addEventListener('click', () => {
-      dom.tocPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  // ============ Data Loading ============
+  // ── Data ──
   async function loadChapters() {
     try {
       const resp = await fetch('data/chapters.json');
-      if (!resp.ok) throw new Error('Failed to load');
+      if (!resp.ok) throw new Error('load failed');
       const data = await resp.json();
-      state.chapters = data.chapters || [];
-      state.totalChapters = data.totalChapters || 100;
-      state.lastUpdate = data.lastUpdate || '';
-    } catch (err) {
-      console.warn('Could not load chapters, showing empty state', err);
+      state.chapters     = data.chapters     || [];
+      state.totalChapters= data.totalChapters|| 100;
+      state.lastUpdate   = data.lastUpdate   || '';
+    } catch (e) {
+      console.warn('Could not load chapters', e);
       state.chapters = [];
     }
   }
 
-  // ============ Rendering ============
-  function renderChapters() {
-    if (!state.chapters || state.chapters.length === 0) {
-      dom.chapterGrid.innerHTML = '';
-      dom.emptyState.style.display = 'block';
-      updateProgress(0);
+  // ── Render TOC ──
+  function renderToc() {
+    const chapters = state.chapters;
+
+    // Update meta bar
+    dom.tocChapterCount.textContent =
+      `已更新 ${chapters.length} 回 / 共 ${state.totalChapters} 回`;
+
+    if (state.lastUpdate) {
+      dom.tocUpdateInfo.textContent = `最近更新：${state.lastUpdate}`;
+    }
+
+    if (!chapters || chapters.length === 0) {
+      dom.tocList.style.display = 'none';
+      dom.tocEmpty.style.display = 'block';
       return;
     }
 
-    dom.emptyState.style.display = 'none';
+    dom.tocEmpty.style.display = 'none';
+    dom.tocList.style.display  = 'flex';
 
-    const cards = state.chapters.map((ch, idx) => {
-      const isRead = state.readChapters.includes(ch.id);
-      const imagesHtml = (ch.images && ch.images.length > 0)
-        ? ch.images.slice(0, 3).map((img) =>
-            `<img class="thumb" src="${escapeHtml(img)}" alt="${escapeHtml(ch.title)}插图" loading="lazy" onerror="this.style.display='none'">`
-          ).join('')
-        : '';
+    // Find the two most recently updated chapters (last 2 in array)
+    const latestIds = new Set(
+      chapters.slice(-2).map(c => c.id)
+    );
 
-      const originalTitleHtml = ch.originalTitle
-        ? `<span class="chapter-original-title">「${escapeHtml(ch.originalTitle)}」</span>`
+    dom.tocList.innerHTML = chapters.map((ch, idx) => {
+      const isLatest = latestIds.has(ch.id);
+
+      const latestBadgeHtml = isLatest
+        ? `<div class="toc-latest-badge">
+             <span class="latest-tag">🆕 最新更新</span>
+             <span class="latest-date">${escapeHtml(state.lastUpdate)}</span>
+           </div>`
         : '';
 
       return `
-        <article class="chapter-card" data-chapter-id="${ch.id}" role="button" tabindex="0" aria-label="第${ch.id}回 ${ch.title}">
-          <div class="chapter-number">${ch.id}</div>
-          <div class="card-header">
-            ${originalTitleHtml}
-            <h2 class="chapter-title">${escapeHtml(ch.title)}</h2>
-          </div>
-          <p class="chapter-preview">${escapeHtml(ch.preview || '')}</p>
-          ${imagesHtml ? `<div class="card-images">${imagesHtml}</div>` : ''}
-          ${isRead ? '<span class="read-badge">✅ 已读完</span>' : ''}
-        </article>
+        <li
+          class="toc-item${isLatest ? ' is-latest' : ''}"
+          data-chapter-id="${ch.id}"
+          role="button"
+          tabindex="0"
+          aria-label="第${ch.id}回 ${ch.title}"
+          style="animation-delay: ${idx * 30}ms"
+        >
+          <span class="toc-num">${ch.id}</span>
+          <span class="toc-title">${escapeHtml(ch.title)}</span>
+          ${latestBadgeHtml}
+        </li>
       `;
     }).join('');
 
-    dom.chapterGrid.innerHTML = cards;
-
-    // Staggered entrance animation
-    const cardEls = dom.chapterGrid.querySelectorAll('.chapter-card');
-    cardEls.forEach((card, i) => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        card.style.opacity = '1';
-        card.style.transform = '';
-      }, 80 * i);
-    });
-
-    // Attach click handlers
-    cardEls.forEach(card => {
-      card.addEventListener('click', () => openChapter(parseInt(card.dataset.chapterId)));
-      card.addEventListener('keydown', (e) => {
+    // Click handlers
+    dom.tocList.querySelectorAll('.toc-item').forEach(item => {
+      item.addEventListener('click', () => openChapter(parseInt(item.dataset.chapterId)));
+      item.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          openChapter(parseInt(card.dataset.chapterId));
+          openChapter(parseInt(item.dataset.chapterId));
         }
+      });
+    });
+
+    // Staggered fade-in
+    requestAnimationFrame(() => {
+      dom.tocList.querySelectorAll('.toc-item').forEach((item, i) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-8px)';
+        setTimeout(() => {
+          item.style.transition = `opacity 0.4s ease, transform 0.4s var(--ease-smooth)`;
+          item.style.opacity = '1';
+          item.style.transform = '';
+        }, 40 + i * 30);
       });
     });
   }
 
-  function updateProgress(readCount) {
-    const total = state.totalChapters;
-    const pct = total > 0 ? Math.round((readCount / total) * 100) : 0;
-    dom.progressBar.style.width = pct + '%';
-    dom.progressCount.textContent = `已读 ${readCount} / ${total} 回`;
-  }
-
-  function getReadCount() {
-    const uniqueRead = new Set(state.readChapters.filter(id => state.chapters.some(c => c.id === id)));
-    return uniqueRead.size;
-  }
-
-  // ============ Chapter Detail Modal ============
+  // ── Chapter Detail Modal ──
   function openChapter(chapterId) {
     const chapter = state.chapters.find(c => c.id === chapterId);
     if (!chapter) return;
 
-    // Mark as read
-    if (!state.readChapters.includes(chapterId)) {
-      state.readChapters.push(chapterId);
-      localStorage.setItem('xyj_read', JSON.stringify(state.readChapters));
-      renderChapters();
-    }
-
-    updateProgress(getReadCount());
-
-    // Build content blocks
     const blocks = (chapter.content || []).map(block => {
       if (block.type === 'text') {
         return `<p>${escapeHtml(block.text)}</p>`;
@@ -185,7 +162,7 @@
       : '';
 
     dom.modalBody.innerHTML = `
-      <div style="text-align:center; margin-bottom: var(--space-sm);">
+      <div style="text-align:center; margin-bottom: 16px;">
         <span class="chapter-num-tag">第 ${chapter.id} 回</span>
         <h2 class="chapter-head">${escapeHtml(chapter.title)}</h2>
         ${originalTitleLine}
@@ -203,29 +180,18 @@
   function closeModal() {
     dom.modal.classList.remove('active');
     document.body.style.overflow = '';
-    dom.modalBody.innerHTML = '';
+    setTimeout(() => { dom.modalBody.innerHTML = ''; }, 400);
   }
 
   dom.modalClose.addEventListener('click', closeModal);
   dom.modal.addEventListener('click', (e) => {
     if (e.target === dom.modal) closeModal();
   });
-
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && dom.modal.classList.contains('active')) {
-      closeModal();
-    }
+    if (e.key === 'Escape' && dom.modal.classList.contains('active')) closeModal();
   });
 
-  // ============ Update Info ============
-  function renderUpdateInfo() {
-    if (state.lastUpdate && dom.updateInfo) {
-      dom.updateInfo.textContent = `上次更新：${state.lastUpdate} ｜ 每晚 22:00 准时更新`;
-    }
-    updateProgress(getReadCount());
-  }
-
-  // ============ Utility ============
+  // ── Utility ──
   function escapeHtml(str) {
     if (!str) return '';
     const div = document.createElement('div');
@@ -233,12 +199,11 @@
     return div.innerHTML;
   }
 
-  // ============ Init ============
+  // ── Init ──
   async function init() {
     applyTheme(state.theme);
     await loadChapters();
-    renderChapters();
-    renderUpdateInfo();
+    renderToc();
   }
 
   init();
