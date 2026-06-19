@@ -25,10 +25,8 @@
   --gold:         #b8912a;
   --gold-light:   #d4a843;
 
-  /* 章节标号 · 最新标签 */
+  /* 章节标号 */
   --ch-num-bg:    var(--red);
-  --latest-bg:    #1a6b3c;
-  --latest-text:  #fff;
 
   /* 排版 */
   --font-serif:   'Noto Serif SC', 'ZCOOL XiaoWei', 'STKaiti', serif;
@@ -64,7 +62,6 @@
   --red-dim:      rgba(224, 85, 69, 0.15);
   --gold:         #c8a030;
   --gold-light:   #e0b845;
-  --latest-bg:    #1a8040;
   --bg-card:      #1e1812;
 }
 
@@ -381,48 +378,6 @@ body {
   line-height: 1.4;
 }
 
-/* 最新更新标签 */
-.toc-latest-badge {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-}
-.latest-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  background: var(--latest-bg);
-  color: var(--latest-text);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 10px;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  animation: pulseBadge 2.5s ease-in-out infinite;
-}
-.latest-date {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* 最新条目高亮 */
-.toc-item.is-latest .toc-title {
-  color: var(--red);
-}
-.toc-item.is-latest .toc-num {
-  background: var(--gold);
-}
-
-@keyframes pulseBadge {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.7; }
-}
-
 /* 空状态 */
 .toc-empty {
   text-align: center;
@@ -564,12 +519,6 @@ body {
   .toc-item { gap: 8px; padding: 9px 4px; }
   .toc-num  { width: 28px; font-size: 10px; }
   .toc-title { font-size: 14px; }
-  .toc-latest-badge { display: none; }
-  /* 在极小屏幕上最新标记移到标题旁 */
-  .toc-item.is-latest .toc-title::after {
-    content: ' 🆕';
-    font-size: 11px;
-  }
 }
 
 /* ===================================================

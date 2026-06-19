@@ -1,7 +1,7 @@
 /**
  * 西游记连载 · 儿童版
  * 首页 + 极简目录 + 章节弹窗
- * v1.2: 修复锁定状态标记 + 添加最近更新标记（显示日期时间）
+ * v1.3: 删除最近更新标记功能，优化锁定状态逻辑（content为空也显示锁定）
  */
 
 (function () {
@@ -58,16 +58,6 @@
     return div.innerHTML;
   }
 
-  function formatUpdateDate(dateStr) {
-    if (!dateStr) return '';
-    // dateStr format: "2026-06-19 22:00"
-    const parts = dateStr.split(' ');
-    if (parts.length < 2) return dateStr;
-    const datePart = parts[0].substring(5); // "06-19"
-    const timePart = parts[1].substring(0, 5); // "22:00"
-    return `${datePart} ${timePart}`;
-  }
-
   // ═─ Build Full Chapter List (with locked placeholders) ═─
   let _fullListCache = null;
 
@@ -80,7 +70,14 @@
     for (let id = 1; id <= state.totalChapters; id++) {
       if (producedIds.has(id)) {
         const ch = state.chapters.find(c => c.id === id);
-        fullList.push({ ...ch, locked: false });
+        // 检查content是否为空（null、undefined或空数组）
+        const hasContent = ch.content && ch.content.length > 0;
+        fullList.push({
+          ...ch,
+          locked: !hasContent,
+          // 如果content为空，标题显示为"未更新"
+          title: hasContent ? ch.title : `第${id}回（未更新）`
+        });
       } else {
         fullList.push({
           id,
@@ -200,23 +197,8 @@
     if (dom.tocEmpty) dom.tocEmpty.style.display = 'none';
     dom.tocList.style.display  = 'flex';
 
-    // Find recently updated chapters (within 3 days)
-    const now = new Date();
-    const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
-    const latestIds = new Set();
-    
-    state.chapters.forEach(ch => {
-      if (ch.updateDate) {
-        const updateTime = new Date(ch.updateDate.replace(/-/g, '/'));
-        if (updateTime >= threeDaysAgo) {
-          latestIds.add(ch.id);
-        }
-      }
-    });
-
     dom.tocList.innerHTML = pageChapters.map((ch, idx) => {
       const isRead = state.readChapters.has(ch.id);
-      const isLatest = latestIds.has(ch.id) && !ch.locked;
 
       const readBadgeHtml = isRead && !ch.locked
         ? `<div class="toc-read-badge">
@@ -231,16 +213,9 @@
            </div>`
         : '';
 
-      const latestBadgeHtml = isLatest && ch.updateDate
-        ? `<div class="toc-latest-badge">
-             <span class="latest-tag">🆕 最近更新</span>
-             <span class="latest-date">${formatUpdateDate(ch.updateDate)}</span>
-           </div>`
-        : '';
-
       return `
         <li
-          class="toc-item${isRead && !ch.locked ? ' is-read' : ''}${ch.locked ? ' is-locked' : ''}${isLatest ? ' is-latest' : ''}"
+          class="toc-item${isRead && !ch.locked ? ' is-read' : ''}${ch.locked ? ' is-locked' : ''}"
           data-chapter-id="${ch.id}"
           data-locked="${ch.locked}"
           role="button"
@@ -252,7 +227,6 @@
           <span class="toc-title">${escapeHtml(ch.title)}</span>
           ${lockHtml}
           ${readBadgeHtml}
-          ${latestBadgeHtml}
         </li>
       `;
     }).join('');
