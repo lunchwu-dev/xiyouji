@@ -1,4 +1,4 @@
-# 技术方案文档
+# 技术方案文档 (v2.1)
 
 > 西游记 · 小朋友的睡前故事 — 技术实现说明
 
@@ -9,35 +9,36 @@
 本项目采用**纯静态前端方案**，无需后端服务器、数据库或构建工具，最大限度降低维护成本，利用 GitHub Pages 免费托管实现公网访问。
 
 ```
-技术栈：HTML5 + CSS3 + Vanilla JavaScript
-托管：  GitHub Pages（免费，自动 CI/CD）
-字体：  Google Fonts（ZCOOL XiaoWei + Noto Serif SC + Noto Sans SC）
-插图：  AI 生成 PNG 图片，静态资源托管
+技术栈：  HTML5 + CSS3 + Vanilla JavaScript
+托管：    GitHub Pages（免费，自动 CI/CD）
+字体：    Google Fonts（ZCOOL XiaoWei + Noto Serif SC + Noto Sans SC）
+插图：    AI 生成 PNG 图片，静态资源托管
 ```
 
 ---
 
-## 二、目录结构
+## 二、目录结构 (v2.1 实际结构)
 
 ```
-xiyouji/                    ← GitHub 仓库根目录
-├── website/                ← 站点源码目录（GitHub Pages 根）
-│   ├── index.html          ← 单页应用主文件（1,239 行）
-│   ├── css/
-│   │   └── style.css       ← 全局样式（900 行）
-│   ├── js/
-│   │   └── app.js          ← 交互逻辑（306 行）
-│   ├── data/
-│   │   ├── chapters.json   ← 章节内容数据（全量内容）
-│   │   ├── progress.json   ← 进度状态配置
-│   │   └── style-guide.json← 插图生成风格指南
-│   └── images/
-│       └── ch0X-scene0X.png← 水墨插图（18 张）
-├── PRODUCT.md              ← 产品方案文档
-├── TECH.md                 ← 技术方案文档（本文件）
-├── ROADMAP.md              ← 项目进度与规划
-└── overview.md             ← 项目概览（AI 生成）
+xiyouji/                      ← GitHub 仓库根目录（即 GitHub Pages 根）
+├── index.html                 ← 单页应用主文件
+├── css/
+│   └── style.css            ← 全局样式（含主题变量、分页控件、已读标记样式）
+├── js/
+│   └── app.js              ← 交互逻辑（含已读管理、分页、锁定状态）
+├── data/
+│   ├── chapters.json        ← 章节内容数据（100章结构，前N章有内容）
+│   ├── progress.json       ← 进度状态配置（currentChapter、chaptersPerDay）
+│   └── style-guide.json   ← 插图生成风格指南
+├── images/
+│   └── ch0X-scene0X.png  ← 水墨插图（当前18张）
+├── PRODUCT.md               ← 产品方案文档
+├── TECH.md                  ← 技术方案文档（本文件）
+├── ROADMAP.md               ← 项目进度与规划
+└── CHAPTER_PLAN.md          ← 完整100章规划表
 ```
+
+> **注意**：仓库根目录即 GitHub Pages 根目录，无需 `website/` 子目录。
 
 ---
 
@@ -48,8 +49,8 @@ xiyouji/                    ← GitHub 仓库根目录
 项目采用 **无框架 SPA** 设计，所有页面在单个 `index.html` 内通过 JS 动态切换视图：
 
 ```
-视图状态：cover（封面/目录）↔ chapter（章节阅读）
-切换方式：JS 控制 DOM 显示/隐藏 + CSS 过渡动画
+视图状态：  cover（封面/目录）↔ chapter（章节阅读）
+切换方式：  JS 控制 DOM 显示/隐藏 + CSS 过渡动画
 ```
 
 ### 3.2 数据驱动渲染
@@ -63,7 +64,7 @@ xiyouji/                    ← GitHub 仓库根目录
   "chapters": [
     {
       "id": 1,
-      "title": "石头里蹦出个小猴子",
+      "title": "仙石裂开，石猴出世",
       "content": [
         { "type": "text", "text": "..." },
         { "type": "image", "src": "images/ch01-scene01.png", "alt": "..." }
@@ -97,52 +98,113 @@ xiyouji/                    ← GitHub 仓库根目录
 
 ---
 
-## 四、设计语言系统
+## 四、v2.1 新增功能技术实现
 
-### 4.1 视觉风格
+### 4.1 已读状态管理
 
-采用**中国传统水墨美学 × 简洁阅读体验**的设计语言：
+**存储方式**：`localStorage['xyj_read']` = `[1, 2, 3, ...]`
 
-| 元素 | 设计决策 |
-|------|---------|
-| 背景 | 宣纸米黄（`#f7f3ec`），营造古籍氛围 |
-| 强调色 | 朱砂红（`#c0392b`）+ 鎏金（`#b8912a`） |
-| 字体 | ZCOOL XiaoWei（标题）+ Noto Serif SC（正文） |
-| 装饰 | SVG 水墨泼墨背景，角落纹样，竹节分割线 |
-| 书封 | 仿古书封设计，上下红色封条，印章元素 |
+**核心逻辑**：
+```javascript
+// 打开章节时标记已读
+function markChapterRead(chapterId) {
+  const read = JSON.parse(localStorage.getItem('xyj_read') || '[]');
+  if (!read.includes(chapterId)) {
+    read.push(chapterId);
+    localStorage.setItem('xyj_read', JSON.stringify(read));
+  }
+}
 
-### 4.2 动效系统
-
-```css
-/* 动效曲线 */
---ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);   /* 弹性过渡 */
---ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* 弹跳感 */
-
-/* 时长档位 */
---dur-fast:  0.18s;   /* 即时反馈（hover 状态）*/
---dur-mid:   0.35s;   /* 页面元素过渡 */
---dur-slow:  0.55s;   /* 页面切换动画 */
+// 渲染目录时检查已读状态
+function isChapterRead(chapterId) {
+  const read = JSON.parse(localStorage.getItem('xyj_read') || '[]');
+  return read.includes(chapterId);
+}
 ```
 
-主要动效清单：
-- 封面入场：stagger 分组淡入（`animation-delay` 阶梯式）
-- 章节卡片：hover 上浮 + 轻微阴影增强
-- 页面切换：fade + translateY 上移
-- 主题切换：CSS transition 平滑过渡（无闪烁）
-- 阅读内容：scroll reveal 渐入
+**视觉标记**：
+- 已读章节编号背景变为 `#999` 灰色（未读为朱砂红 `#c0392b`）
+- 章节按钮右侧显示 `✓ 已读` 金色标签
+
+### 4.2 未产出章节锁定状态
+
+**实现方式**：动态生成100章完整目录，未产出章节（`id > currentChapter`）添加锁定样式和事件拦截。
+
+```javascript
+// 锁定状态判断
+const isLocked = chapter.id > currentChapter;
+
+// 锁定章节样式
+.locked-chapter {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+// 点击锁定章节 → 弹出提示
+if (isLocked) {
+  showLockToast('📖 这一回还在准备中，先看看其他回吧～');
+  return;
+}
+```
+
+**Toast 提示**：
+- CSS 动画实现，2.2秒后自动消失
+- 主题切换时样式自适应（亮色/暗色）
+
+### 4.3 目录分页功能
+
+**分页算法**：
+```javascript
+const CHAPTERS_PER_PAGE = 10;
+const totalPages = Math.ceil(totalChapters / CHAPTERS_PER_PAGE);
+const currentPage = Math.ceil(currentChapter / CHAPTERS_PER_PAGE);
+
+// 计算当前页显示的章节范围
+const startId = (currentPage - 1) * CHAPTERS_PER_PAGE + 1;
+const endId = Math.min(startId + CHAPTERS_PER_PAGE - 1, totalChapters);
+```
+
+**分页控件**：
+- `上一页` / `下一页` 按钮（首页隐藏上一页，末页隐藏下一页）
+- 页码按钮（智能省略：`1 … 4 5 6 … 10`）
+- 当前页码高亮为朱砂红色
+
+**响应式**：
+- 桌面：分页控件居中，单行显示
+- 手机：分页控件换行，页码按钮缩小
+
+### 4.4 智能翻页（默认打开最近已读页）
+
+**实现逻辑**：
+```javascript
+function getDefaultPage() {
+  const read = JSON.parse(localStorage.getItem('xyj_read') || '[]');
+  if (read.length === 0) return 1;  // 首次访问，默认第1页
+  
+  // 找到最近已读的章节
+  const lastReadId = Math.max(...read);
+  return Math.ceil(lastReadId / CHAPTERS_PER_PAGE);
+}
+```
+
+**效果**：
+- 首次访问：默认显示第1页
+- 已读第8章后刷新：自动打开第1页（第8章在第1页）
+- 已读第15章后刷新：自动打开第2页（第15章在第2页）
 
 ---
 
-## 五、关键技术实现
+## 五、关键技术实现（延续）
 
 ### 5.1 章节发布控制
 
-通过 `progress.json` 中 `currentChapter` 控制当前已解锁章节数。未解锁章节显示锁定态：
+通过 `progress.json` 中 `currentChapter` 控制当前已解锁章节数：
 
 ```javascript
 // app.js 中的章节锁定判断
 const isUnlocked = chapter.id <= currentChapter;
-// 未解锁章节：禁用点击，显示「待更新」标签
+// 未解锁章节：禁用点击，显示 🔒 锁定图标
 ```
 
 ### 5.2 阅读进度记忆
@@ -188,14 +250,14 @@ const imageObserver = new IntersectionObserver((entries) => {
 
 - **仓库**：`lunchwu-dev/xiyouji`
 - **部署分支**：`main`
-- **发布目录**：`website/`（在 GitHub Pages 设置中配置为 `/(root)`）
+- **发布目录**：`/（根目录）`
 - **访问地址**：`https://lunchwu-dev.github.io/xiyouji/`
 
 ### 6.2 部署流程
 
 ```bash
 # 本地修改内容
-vim website/data/chapters.json
+vim data/chapters.json
 
 # 提交并推送（自动触发 Pages 构建）
 git add .
@@ -207,7 +269,7 @@ git push origin main
 
 ### 6.3 内容更新工作流
 
-1. 使用 AI（WorkBuddy）生成新章节文字内容
+1. 使用 AI（WorkBuddy）生成新章节文字内容（按 v2.0 高还原度标准）
 2. 使用 AI 图像生成工具生成水墨插图
 3. 将章节数据追加至 `chapters.json`
 4. 更新 `progress.json` 中 `currentChapter`
@@ -226,4 +288,14 @@ git push origin main
 
 ---
 
-*文档版本：v1.0 | 更新日期：2026-06-19*
+## 八、版本历史
+
+| 版本 | 日期 | 核心变更 |
+|------|------|---------|
+| v1.0 | 2026-06-19 | 首次发布，6章压缩版 |
+| v2.0 | 2026-06-19 | 100章重新设计，重写前10章（高还原度） |
+| v2.1 | 2026-06-19 | 新增已读标记、锁定状态、目录分页、智能翻页 |
+
+---
+
+*文档版本：v2.1 | 更新日期：2026-06-19 | 作者：吴八哥*
