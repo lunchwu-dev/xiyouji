@@ -159,12 +159,18 @@
 
       <!-- 弹窗顶部导航栏 -->
       <div class="modal-nav-bar">
-        <button class="modal-back-home" id="modalBackHome" aria-label="返回首页">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-label">返回目录</span>
+        <button class="modal-back-home" id="modalBackHome" aria-label="返回目录">
+          <svg class="back-arrow-svg" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="nav-label">回目录</span>
         </button>
         <span class="modal-chapter-indicator" id="modalChapterIndicator"></span>
-        <button class="modal-close" id="modalClose" aria-label="关闭阅读">✕</button>
+        <button class="modal-close" id="modalClose" aria-label="关闭阅读">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true">
+            <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
 
       <!-- 正文区 -->
@@ -172,24 +178,57 @@
 
       <!-- 弹窗底部章节导航 -->
       <div class="modal-chapter-nav" id="modalChapterNav">
+
+        <!-- 上一章 -->
         <button class="chapter-nav-btn prev-btn" id="modalPrevChapter" aria-label="上一章">
-          <span class="nav-arrow">←</span>
-          <div class="nav-btn-text">
-            <span class="nav-btn-label">上一章</span>
-            <span class="nav-btn-title" id="prevChapterTitle">—</span>
+          <div class="nav-btn-inner">
+            <div class="nav-btn-direction">
+              <svg class="nav-chevron" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 3L4 14L12 25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="nav-btn-label-group">
+                <span class="nav-direction-text">前一回</span>
+                <span class="nav-btn-chapter-title" id="prevChapterTitle">—</span>
+              </div>
+            </div>
+            <div class="nav-ink-bar nav-ink-left"></div>
           </div>
         </button>
+
+        <!-- 目录 -->
         <button class="chapter-nav-btn toc-btn" id="modalGoToc" aria-label="返回目录">
-          <span class="nav-icon-lg">≡</span>
-          <span class="nav-btn-label">目录</span>
-        </button>
-        <button class="chapter-nav-btn next-btn" id="modalNextChapter" aria-label="下一章">
-          <div class="nav-btn-text">
-            <span class="nav-btn-label">下一章</span>
-            <span class="nav-btn-title" id="nextChapterTitle">—</span>
+          <div class="toc-btn-inner">
+            <!-- 卷轴图标 SVG -->
+            <svg class="scroll-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="4" y="6" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <line x1="8" y1="11" x2="20" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="8" y1="14.5" x2="20" y2="14.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="8" y1="18" x2="16" y2="18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <rect x="2" y="5" width="24" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+              <rect x="2" y="19" width="24" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+              <rect x="2" y="5" width="24" height="4" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
+              <rect x="2" y="19" width="24" height="4" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+            <span class="toc-btn-label">目录</span>
           </div>
-          <span class="nav-arrow">→</span>
         </button>
+
+        <!-- 下一章 -->
+        <button class="chapter-nav-btn next-btn" id="modalNextChapter" aria-label="下一章">
+          <div class="nav-btn-inner">
+            <div class="nav-ink-bar nav-ink-right"></div>
+            <div class="nav-btn-direction nav-btn-direction-right">
+              <div class="nav-btn-label-group nav-btn-label-right">
+                <span class="nav-direction-text">后一回</span>
+                <span class="nav-btn-chapter-title" id="nextChapterTitle">—</span>
+              </div>
+              <svg class="nav-chevron" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 3L12 14L4 25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </button>
+
       </div>
 
     </div>

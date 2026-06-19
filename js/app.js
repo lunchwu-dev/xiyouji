@@ -36,6 +36,7 @@
     modalGoToc:           $('#modalGoToc'),
     prevChapterTitle:     $('#prevChapterTitle'),
     nextChapterTitle:     $('#nextChapterTitle'),
+
   };
 
   // ── Theme ──
